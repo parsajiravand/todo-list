@@ -24,7 +24,7 @@
       </div>
       <div class="row">
         <ul class="collection col s6 offset-s3">
-          <li class="collection-item" v-for="todo in todos" :key="todo.id">
+          <li class="collection-item" v-for="(todo,index) in todos" :key="index" >
             <p>
               <label>
                 <input
@@ -32,7 +32,7 @@
                   :checked="todo.done"
                   @change="todo.done = !todo.done"
                 />
-                <span>{{ todo.title }}</span>
+                <span contenteditable="true">{{ todo.title }}</span>
                 <span>
                   <a @click.prevent="deleteTodo(todo)">
                     <i class="material-icons right teal-text">X</i>

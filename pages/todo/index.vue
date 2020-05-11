@@ -11,7 +11,14 @@
             v-model="newTodo"
             placeholder="Some Works"
           />
-          <input type="date" name="date" id="" v-model="dateTodo" />
+          <datetime
+            name="date"
+            type="datetime"
+            v-model="dateTodo"
+            placeholder="Enter Your Date"
+            format="yyyy-MM-dd HH:mm"
+            auto
+          ></datetime>
 
           <label for="textTodo">Enter Text</label>
           <textarea
@@ -42,22 +49,27 @@
             >X</span
           >
 
-       
-          <span @click.prevent="editTodo(todo)">Edit</span>
-          <h5>{{ todo.title }}</h5>
-          <small>{{ todo.date }}</small>
-          <p class="todo-text">{{ todo.text }}</p>
-             <label class="custom-control custom-checkbox right-align">
-           
+          <h5
+            contenteditable="true"
+            :class="{ done: todo.checked }"
+            class="editme"
+          >
+            {{ todo.title }}
+          </h5>
+          <small contenteditable="true">{{
+            todo.date | formatDate("MMMM Do YYYY, h:mm a")
+          }}</small>
+          <p class="todo-text" contenteditable="true">{{ todo.text }}</p>
+          <label class="custom-control custom-checkbox right-align">
             <input
               type="checkbox"
               value="checkedValue"
               class="custom-control-input"
               :checked="todo.done"
-              @change="todo.done = !todo.done"
+              v-model="todo.checked"
             />
+
             <span class="custom-control-indicator"></span>
-            <span class="custom-control-description">Done</span>
           </label>
         </div>
       </div>
@@ -70,7 +82,10 @@ export default {
     return {
       todos: [],
       newTodo: "",
-      emptyFieldError: false
+      dateTodo: "",
+      textTodo: "",
+      emptyFieldError: false,
+      checked: false
     };
   },
   watch: {
@@ -100,12 +115,11 @@ export default {
         }, 3000);
       }
     },
+
     deleteTodo(todo) {
       const todoIndex = this.todos.indexOf(todo);
+
       this.todos.splice(todoIndex, 1);
-    },
-    editTodo(todo) {
-      const todoIndex = this.todos.indexOf(todo);
     }
   }
 };
@@ -122,9 +136,14 @@ export default {
   height: auto;
   animation-delay: 1s;
 }
+/* Global Style */
 .text-danger {
   color: red !important;
 }
+.done {
+  text-decoration: line-through;
+}
+
 .todo-box .todo-remove {
   font-size: 20px;
   margin-bottom: 10px;
