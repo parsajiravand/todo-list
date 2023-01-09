@@ -11,7 +11,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "luxon": "^1.24.1",
+    "luxon": "^1.28.1",
     "moment": "^2.25.3",
     "nuxt": "^2.0.0",
     "vue-datetime": "^1.0.0-beta.13",
